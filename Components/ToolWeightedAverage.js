@@ -49,7 +49,7 @@ class ToolWeightedAverage extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return [ "total-weight-result", "weighted-average-result" ];
+        return [ "total-weight-result", "weighted-average-result", "class-result" ];
     }
 
     static register() {
@@ -111,6 +111,7 @@ class ToolWeightedAverage extends HTMLElement {
         let sumOfWeights = 0;
         let gwaRaw;
         let gwaRounded;
+        let hasFailingGrade = false;
 
         unitsInputs.each(
             function() {
@@ -118,14 +119,15 @@ class ToolWeightedAverage extends HTMLElement {
                 units.push(val);
                 totalUnits += val;
             }
-        )
+        );
 
         gradesInputs.each(
             function() {
                 let val = parseFloat($(this).val());
+                if (val >= 2.25 && !hasFailingGrade) { hasFailingGrade = true; }
                 grades.push(val);
             }
-        )
+        );
 
         for (let i = 0; i < this.rowCount; i++) {
             let weight = units[i] * grades[i];
@@ -133,13 +135,20 @@ class ToolWeightedAverage extends HTMLElement {
             sumOfWeights += weight;
         }
 
-        console.log(sumOfWeights, this.rowCount);
-
         gwaRaw = sumOfWeights / totalUnits;
         gwaRounded = Math.round((gwaRaw + Number.EPSILON) * 100) / 100;
 
         this.totalWeightBox.val(totalUnits);
-        this.weightedAverageResultBox.val(gwaRaw + " (rounded as " + gwaRounded + ")");
+        this.weightedAverageResultBox.val(gwaRaw.toFixed(6) + " (rounded as " + gwaRounded + ")");
+        this.classResultBox.val(ToolWeightedAverage.getClass(gwaRaw, hasFailingGrade));
+    }
+
+    static getClass(gwa, hasFailingGrade)
+    {
+        if (hasFailingGrade) { return "---"; }
+        if (gwa <= 1.25) { return "President's Lister (Maybe)"; }
+        if (gwa <= 1.75) { return "Dean's Lister (Maybe)"; }
+        return "---";
     }
 
     initialize() {
@@ -175,6 +184,10 @@ class ToolWeightedAverage extends HTMLElement {
         else if (name == "weighted-average-result")
         {
             this.weightedAverageResultBox = $(document).find(`input[name="${newValue}"]`);
+        }
+        else if (name == "class-result")
+        {
+            this.classResultBox = $(document).find(`input[name="${newValue}"]`);
         }
     }
 
