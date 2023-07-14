@@ -1,0 +1,258 @@
+/*** INDEX ***/
+
+    :root {
+        --content-bg: #EEE;
+        --modal-bg: #DDD;
+        --aside-bg: #CCC;
+        --border: #BBB;
+        --modal-hover: #BBB;
+        --disabled: #666;
+        --color-error: #F66;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 16px 0;
+    }
+
+    p {
+        margin: 12px 0;
+    }
+
+    ul li, ol li {
+        margin: 8px 0;
+    }
+
+    /* Table */
+
+    table {
+        margin: 16px 0;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        width: 100%;
+    }
+    
+    th {
+        text-align: center;
+    }
+    
+    th, td {
+        border: var(--border) 2px solid;
+    }
+    
+    td, th {
+        padding: 6px;
+    }
+    
+    tr td:first-of-type {
+        text-align: center;
+    }
+    
+    tr ul {
+        margin: 0;
+        padding-left: 24px;
+    }
+    
+    tr ul li {
+        margin: 0;
+    }
+
+/*** BODY WRAPPER ***/
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 18px;
+        margin: 0 10vw;
+        height: 100%;
+        min-height: 100vh;
+        padding: 4vw 5vw;
+    }
+
+    body::before {
+        content: "";
+        z-index: -1;
+        position: fixed;
+        display: block;
+        top: 0;
+        left: 10vw;
+        width: calc(100% - 20vw);
+        height: 100%;
+        background-color: white;
+    }
+
+    body::after {
+        content: "";
+        z-index: -2;
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+        background-image: linear-gradient( var(--accent-color), var(--accent-color) ), var(--background-img);
+        background-size: cover;
+    }
+
+
+/*** FOOTER ***/
+
+    footer {
+        font-size: 0.9em;
+        padding: 25px 25px 0 25px;
+        color: var(--disabled);
+    }
+
+    .subtitle {
+        font-size: 0.8em;
+        margin: 8px 0;
+        color: var(--disabled);
+    }
+
+/*** PLUGGABLES ***/
+
+    .marginless-list li {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .block-image {
+        display: block;
+        width: 100%;
+    }
+
+    .word-break-wrap {
+        word-break: break-all;
+    }
+
+    .no-margin {
+        margin: 0;
+    }
+
+    .dual-column-2-by-3 {
+        display: grid;
+        gap: 3vw;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+        grid-auto-rows: auto;
+    }
+
+    .boxed-content {
+        background-color: var(--aside-bg);
+        padding: 1em;
+        font-size: 0.9em;
+    }
+
+    .l0rge {
+        font-size: 1.5em;
+    }
+
+    .sm0l {
+        font-size: 0.8em;
+    }
+
+    .very-sm0l {
+        font-size: 0.69em;
+    }
+
+/*** FORMS ***/
+
+    input[type="text"], input[type="number"], button {
+        border: none;
+        padding: 0.25em 0.75em;
+        font: inherit;
+        font-style: normal;
+    }
+
+    input[type="text"], input[type="number"] {
+        width: 100%;
+        display: block;
+    }
+
+    input[disabled] {
+        background-color: field;
+    }
+
+    button {
+        transition: background-color 0.25s ease;
+        background-color: var(--modal-bg);
+    }
+
+    button:hover {
+        cursor: pointer;
+        background-color: var(--modal-hover);
+    }
+
+/*** MEDIA QUERIES ***/
+
+@media screen and (max-width: 800px) {
+
+    body {
+        margin: 0;
+    }
+
+    body::before {
+        left: 0;
+        width: 100vw;
+    }
+
+    .nav-tab {
+        letter-spacing: 1px;
+        font-family: inherit;
+        padding: 6px 8px;
+    }
+
+    .structured-content {
+        grid-template-columns: 1fr;
+    }
+
+    .content-nav {
+        position: relative;
+        left: -3vw;
+        min-width: calc(100% + 6vw);
+        padding: 0 6vw;
+        max-height: 250px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .content-nav .content-nav-tab {
+        padding: 16px 10px;
+        flex: 1;
+        font-size: 1em;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+}
+
+@media screen and (max-width: 858px) {
+    body {
+        font-size: 18px;
+    }
+}
+ 
+@media screen and (max-width: 780px) {
+    body {
+        font-size: 16px;
+    }
+}
+ 
+@media screen and (max-width: 702px) {
+    body {
+        font-size: 14px;
+    }
+}
+ 
+@media screen and (max-width: 624px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .dual-column-2-by-3 {
+        display: flex;
+        flex-direction: column;
+    }
+}
